@@ -6,14 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Action 方法注解
- * Created by wuhao on 16/3/16.
+ * Created by wuhao on 16/3/23.
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Action {
-    /**
-     * 请求类型与路径
-     */
-    String value();
+public @interface Controller {
 }
