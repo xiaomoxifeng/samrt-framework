@@ -13,7 +13,10 @@ import java.util.Set;
  * 类操作
  * Created by wuhao on 16/3/23.
  */
-public class ClassHelper {
+public final class ClassHelper {
+    /**
+     * 定义类集合（用于存放所加载的类）
+     */
     private static final Set<Class<?>> CLASS_SET;
 
     static {
