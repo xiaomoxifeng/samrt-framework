@@ -1,5 +1,6 @@
 package com.json.smart4j.framework.bean;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,6 +13,7 @@ public class View {
 
     public View(String path) {
         this.path = path;
+        model = new HashMap<String, Object>();
     }
     public View addModel(String key,Object value){
         model.put(key,value);
