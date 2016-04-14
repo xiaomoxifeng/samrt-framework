@@ -1,50 +1,52 @@
 package com.json.smart4j.framework.util;
 
+import com.json.smart4j.framework.bean.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
  * 反射工具类
  * Created by wuhao on 16/3/23.
  */
-public final class ReflectionUtil {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReflectionUtil.class);
+public final class ReflectionUtil {    private static final Logger LOGGER = LoggerFactory.getLogger(ReflectionUtil.class);
 
     /**
      * 创建实例
-     *
-     * @param cls
-     * @return
      */
     public static Object newInstance(Class<?> cls) {
         Object instance;
         try {
             instance = cls.newInstance();
         } catch (Exception e) {
-            LOGGER.error("new instance failure ", e);
+            LOGGER.error("new instance failure", e);
             throw new RuntimeException(e);
         }
         return instance;
     }
 
     /**
+     * 创建实例（根据类名）
+     */
+    public static Object newInstance(String className) {
+        Class<?> cls = ClassUtil.loadClass(className);
+        return newInstance(cls);
+    }
+
+    /**
      * 调用方法
-     *
-     * @param obj
-     * @param method
-     * @param args
-     * @return
      */
     public static Object invokeMethod(Object obj, Method method, Object... args) {
         Object result;
         try {
             method.setAccessible(true);
-            result = method.invoke(obj,args);
+            result = method.invoke(obj, args);
         } catch (Exception e) {
             LOGGER.error("invoke method failure", e);
             throw new RuntimeException(e);
@@ -52,17 +54,14 @@ public final class ReflectionUtil {
         return result;
     }
 
+
     /**
      * 设置成员变量的值
-     * @param obj
-     * @param field
-     * @param value
      */
-    public static void setField(Object obj, Field field,Object value){
-
+    public static void setField(Object obj, Field field, Object value) {
         try {
             field.setAccessible(true);
-            field.set(obj,value);
+            field.set(obj, value);
         } catch (Exception e) {
             LOGGER.error("set field failure", e);
             throw new RuntimeException(e);

@@ -58,7 +58,7 @@ public class ClassUtil {
     public static Set<Class<?>> getClassSet(String packageName) {
         Set<Class<?>> classSet = new HashSet<Class<?>>();
         try {
-            Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(",", "/"));
+            Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(".", "/"));
             while (urls.hasMoreElements()) {
                 URL url = urls.nextElement();
                 if (url != null) {
@@ -89,7 +89,7 @@ public class ClassUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return classSet;
     }
 
     /**
@@ -101,21 +101,18 @@ public class ClassUtil {
      */
     private static void addClass(Set<Class<?>> classSet, String packagePath, String packageName) {
         File[] files = new File(packagePath).listFiles(new FileFilter() {
-            @Override
             public boolean accept(File file) {
                 return (file.isFile() && file.getName().endsWith(".class")) || file.isDirectory();
             }
         });
         for (File file : files) {
             String fileName = file.getName();
-            //文件
             if (file.isFile()) {
                 String className = fileName.substring(0, fileName.lastIndexOf("."));
                 if (StringUtil.isNotEmpty(packageName)) {
                     className = packageName + "." + className;
                 }
                 doAddClass(classSet, className);
-                //目录(递归)
             } else {
                 String subPackagePath = fileName;
                 if (StringUtil.isNotEmpty(packagePath)) {

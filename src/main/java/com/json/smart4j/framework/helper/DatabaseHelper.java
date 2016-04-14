@@ -32,21 +32,21 @@ public class DatabaseHelper {
     static {
         CONNECTION_HOLDER = new ThreadLocal<Connection>();
         QUERY_RUNNER = new QueryRunner();
-        Properties conf = PropsUtil.loadProps("config.properties");
-        String driver = conf.getProperty("jdbc.driver");
-        String url = conf.getProperty("jdbc.url");
-        String username = conf.getProperty("jdbc.username");
-        String password = conf.getProperty("jdbc.password");
+//        Properties conf = PropsUtil.loadProps("config.properties");
+//        String driver = conf.getProperty("jdbc.driver");
+//        String url = conf.getProperty("jdbc.url");
+//        String username = conf.getProperty("jdbc.username");
+//        String password = conf.getProperty("jdbc.password");
         DATA_SOURCE = new BasicDataSource();
-        DATA_SOURCE.setDriverClassName(driver);
-        DATA_SOURCE.setUrl(url);
-        DATA_SOURCE.setUsername(username);
-        DATA_SOURCE.setPassword(password);
-        try {
-            Class.forName(driver);
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("can not load jdbc driver",e);
-        }
+        DATA_SOURCE.setDriverClassName(ConfigHelper.getJdbcDriver());
+        DATA_SOURCE.setUrl(ConfigHelper.getJdbcUrl());
+        DATA_SOURCE.setUsername(ConfigHelper.getJdbcUsername());
+        DATA_SOURCE.setPassword(ConfigHelper.getJdbcPassword());
+//        try {
+//            Class.forName(driver);
+//        } catch (ClassNotFoundException e) {
+//            LOGGER.error("can not load jdbc driver",e);
+//        }
     }
 
     /**
