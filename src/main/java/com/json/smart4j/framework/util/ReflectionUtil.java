@@ -48,7 +48,7 @@ public final class ReflectionUtil {    private static final Logger LOGGER = Logg
             method.setAccessible(true);
             result = method.invoke(obj, args);
         } catch (Exception e) {
-            LOGGER.error("invoke method failure", e);
+            LOGGER.error("invoke method "+ method.getName() +" failure", e);
             throw new RuntimeException(e);
         }
         return result;

@@ -1,9 +1,6 @@
 package com.json.smart4j.framework;
 
-import com.json.smart4j.framework.helper.BeanHelper;
-import com.json.smart4j.framework.helper.ClassHelper;
-import com.json.smart4j.framework.helper.ControllerHelper;
-import com.json.smart4j.framework.helper.IocHelper;
+import com.json.smart4j.framework.helper.*;
 import com.json.smart4j.framework.util.ClassUtil;
 
 /**
@@ -15,6 +12,7 @@ public final class HelperLoader {
         Class<?>[] classList = {
                 ClassHelper.class,
                 BeanHelper.class,
+                AopHelper.class,
                 IocHelper.class,
                 ControllerHelper.class
         };

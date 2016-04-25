@@ -4,6 +4,7 @@ import com.json.smart4j.framework.bean.FileParam;
 import com.json.smart4j.framework.bean.FormParam;
 import com.json.smart4j.framework.bean.Param;
 import com.json.smart4j.framework.util.ArrayUtil;
+import com.json.smart4j.framework.util.CodecUtil;
 import com.json.smart4j.framework.util.StreamUtil;
 import com.json.smart4j.framework.util.StringUtil;
 
@@ -18,8 +19,14 @@ import java.util.List;
  * Created by apple on 16/4/25.
  */
 public class RequestHelper {
+    /**
+     * 创建请求对象
+     */
     public static Param createParam(HttpServletRequest request) throws IOException {
-        return null;
+        List<FormParam> formParamList = new ArrayList<FormParam>();
+        formParamList.addAll(parseParameterNames(request));
+        formParamList.addAll(parseInputStream(request));
+        return new Param(formParamList);
     }
 
     private static List<FormParam> parseParameterNames(HttpServletRequest request) {
@@ -49,6 +56,21 @@ public class RequestHelper {
     }
 
     private static List<FormParam> parseInputStream(HttpServletRequest request) throws IOException {
-        return null;
+        List<FormParam> formParamList = new ArrayList<FormParam>();
+        String body = CodecUtil.decodeURL(StreamUtil.getString(request.getInputStream()));
+        if (StringUtil.isNotEmpty(body)) {
+            String[] kvs = StringUtil.splitString(body, "&");
+            if (ArrayUtil.isNotEmpty(kvs)) {
+                for (String kv : kvs) {
+                    String[] array = StringUtil.splitString(kv, "=");
+                    if (ArrayUtil.isNotEmpty(array) && array.length == 2) {
+                        String fieldName = array[0];
+                        String fieldValue = array[1];
+                        formParamList.add(new FormParam(fieldName, fieldValue));
+                    }
+                }
+            }
+        }
+        return formParamList;
     }
 }
