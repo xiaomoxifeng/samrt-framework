@@ -35,6 +35,7 @@ com/json/smart4j/framework/bean/FormParam.class
 com/json/smart4j/framework/util/CollectionUtil.class
 com/json/smart4j/framework/helper/AopHelper.class
 com/json/smart4j/framework/annotation/Action.class
+com/json/smart4j/framework/helper/ServletHelper.class
 com/json/smart4j/framework/proxy/ProxyManager.class
 com/json/smart4j/framework/util/CastUtil.class
 com/json/smart4j/framework/util/ReflectionUtil.class
